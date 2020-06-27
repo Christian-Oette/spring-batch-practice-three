@@ -1,4 +1,4 @@
-package com.christianoette.springbatchpracticethree;
+package com.christianoette.practice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

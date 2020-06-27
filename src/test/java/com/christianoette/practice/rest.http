@@ -1,0 +1,31 @@
+# Intellij Ultimate test file, to check the api
+
+GET localhost:8082/job-monitoring/job-names
+Accept: application/json
+Content-Type: application/json
+
+###
+
+POST localhost:8082/job-monitoring/run-simple-job
+Accept: application/json
+Content-Type: application/json
+
+###
+
+GET localhost:8082/job-monitoring/job/simpleJob
+Accept: application/json
+Content-Type: application/json
+
+###
+
+GET localhost:8082/job-monitoring/job/instance/1
+Accept: application/json
+Content-Type: application/json
+
+###
+
+GET localhost:8082/events/ping
+Accept: application/json
+Content-Type: application/json
+
+###
