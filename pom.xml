@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.christianoette</groupId>
 	<artifactId>spring-batch-practice-three</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>spring-batch-practice-three</name>
 	<description>Spring Batch Monitoring Practice Project</description>
 
