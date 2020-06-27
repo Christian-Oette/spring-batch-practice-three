@@ -1,6 +1,6 @@
 package com.christianoette.dontchangeit.services;
 
-import com.christianoette.practice.Event;
+import com.christianoette.dontchangeit.Event;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;

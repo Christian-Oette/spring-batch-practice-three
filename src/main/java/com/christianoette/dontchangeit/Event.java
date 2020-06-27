@@ -1,4 +1,4 @@
-package com.christianoette.practice;
+package com.christianoette.dontchangeit;
 
 public interface Event {
 
