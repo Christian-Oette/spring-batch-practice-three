@@ -16,6 +16,7 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,7 @@ public class JobMonitoringController {
     private final JobOperator jobOperator;
     private final Job simpleJob;
     private final JobRegistry jobRegistry;
+    private final JobRepository jobRepository;
 
     public JobMonitoringController(JobRepository jobRepository,
                                    JobExplorer jobExplorer,
@@ -42,16 +44,18 @@ public class JobMonitoringController {
         this.jobOperator = jobOperator;
         this.simpleJob = simpleJob;
         this.jobRegistry = jobRegistry;
+        this.jobRepository = jobRepository;
     }
 
     @GetMapping("/job-definitions")
     public JsonWrapper jobDefinitions() {
-        return new JsonWrapper(0);
+        return new JsonWrapper(jobs.size());
     }
 
     @GetMapping("/job-names")
     public JsonWrapper getJobNames() {
-        return new JsonWrapper(List.of());
+        Collection<String> jobNames = jobRegistry.getJobNames();
+        return new JsonWrapper(jobNames);
     }
 
     @PostMapping("/job/start-new")
