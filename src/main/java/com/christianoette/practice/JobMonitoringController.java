@@ -30,7 +30,8 @@ public class JobMonitoringController {
     private final Job simpleJob;
     private final JobRegistry jobRegistry;
 
-    public JobMonitoringController(JobRepository jobRepository, JobExplorer jobExplorer,
+    public JobMonitoringController(JobRepository jobRepository,
+                                   JobExplorer jobExplorer,
                                    TriggerJobService triggerJobService,
                                    List<Job> jobs, JobOperator jobOperator,
                                    @SimpleJob Job simpleJob,
@@ -45,49 +46,41 @@ public class JobMonitoringController {
 
     @GetMapping("/job-definitions")
     public JsonWrapper jobDefinitions() {
-        return new JsonWrapper(jobs.size());
+        return new JsonWrapper(0);
     }
 
     @GetMapping("/job-names")
     public JsonWrapper getJobNames() {
-        //return new JsonWrapper(jobExplorer.getJobNames());
-        return new JsonWrapper(jobRegistry.getJobNames());
+        return new JsonWrapper(List.of());
     }
 
     @PostMapping("/job/start-new")
     public void runJob(@RequestParam(value = "jobName") String jobName) throws NoSuchJobException {
-        Job job = jobRegistry.getJob(jobName);
-        triggerJobService.triggerJob(job);
+
     }
 
     @GetMapping("/job/{jobName}/instances")
-    public JsonWrapper getJobInstances(@PathVariable String jobName) {
-        List<JobInstance> jobInstances = jobExplorer.getJobInstances(jobName, 0, 100);
-        return new JsonWrapper(jobInstances);
+    public JsonWrapper getJobInstances(@PathVariable String jobName) { ;
+        return new JsonWrapper(List.of());
     }
 
     @GetMapping("/job/instance/{instanceId}")
     public JsonWrapper getJobExecutions(@PathVariable Long instanceId) {
-        JobInstance jobInstance = jobExplorer.getJobInstance(instanceId);
-        List<JobExecution> jobExecutions = jobExplorer.getJobExecutions(jobInstance);
-        return new JsonWrapper(new JobExecutionsDto(jobExecutions));
+        return null;
     }
 
     @PostMapping("/execution/{executionId}/stop")
     public void stopExecution(@PathVariable Long executionId) throws NoSuchJobExecutionException, JobExecutionNotRunningException {
-        jobOperator.stop(executionId);
+
     }
 
     @PostMapping("/execution/{executionId}/restart")
     public void startExecution(@PathVariable Long executionId) throws JobParametersInvalidException, JobRestartException, JobInstanceAlreadyCompleteException, NoSuchJobExecutionException, NoSuchJobException {
-        jobOperator.restart(executionId);
+
     }
 
     @PostMapping("/simple-job/start/{parameter}")
     public void startSimpleJobWithParameter(@PathVariable String parameter) {
-        JobParameters jobParameters = new JobParametersBuilder()
-                .addParameter("parameter", new JobParameter(parameter))
-                .toJobParameters();
-        triggerJobService.triggerJob(simpleJob, jobParameters);
+
     }
 }

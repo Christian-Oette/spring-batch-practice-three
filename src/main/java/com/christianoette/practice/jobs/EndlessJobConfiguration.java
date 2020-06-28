@@ -10,9 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Map;
-import java.util.Optional;
-
 @Configuration
 public class EndlessJobConfiguration {
 
@@ -43,7 +40,7 @@ public class EndlessJobConfiguration {
                             .getJobExecution()
                             .getExecutionContext();
                     int count = executionContext.getInt("contextInfo", 0);
-                    executionContext.putInt("contextInfo", count +1);
+                    executionContext.putInt("contextInfo", count);
 
                     try {
                         Thread.sleep(2000);
