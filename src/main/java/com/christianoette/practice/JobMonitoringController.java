@@ -64,13 +64,16 @@ public class JobMonitoringController {
     }
 
     @GetMapping("/job/{jobName}/instances")
-    public JsonWrapper getJobInstances(@PathVariable String jobName) { ;
-        return new JsonWrapper(List.of());
+    public JsonWrapper getJobInstances(@PathVariable String jobName) {
+        List<JobInstance> jobInstances = jobExplorer.getJobInstances(jobName, 0, 100);
+        return new JsonWrapper(jobInstances);
     }
 
     @GetMapping("/job/instance/{instanceId}")
     public JsonWrapper getJobExecutions(@PathVariable Long instanceId) {
-        return null;
+        JobInstance jobInstance = jobExplorer.getJobInstance(instanceId);
+        List<JobExecution> jobExecutions = jobExplorer.getJobExecutions(jobInstance);
+        return new JsonWrapper(new JobExecutionsDto(jobExecutions));
     }
 
     @PostMapping("/execution/{executionId}/stop")
