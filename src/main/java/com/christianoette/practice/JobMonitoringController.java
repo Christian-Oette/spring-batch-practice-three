@@ -60,7 +60,8 @@ public class JobMonitoringController {
 
     @PostMapping("/job/start-new")
     public void runJob(@RequestParam(value = "jobName") String jobName) throws NoSuchJobException {
-
+        Job job = jobRegistry.getJob(jobName);
+        triggerJobService.triggerJob(job);
     }
 
     @GetMapping("/job/{jobName}/instances")
@@ -78,16 +79,19 @@ public class JobMonitoringController {
 
     @PostMapping("/execution/{executionId}/stop")
     public void stopExecution(@PathVariable Long executionId) throws NoSuchJobExecutionException, JobExecutionNotRunningException {
-
+        jobOperator.stop(executionId);
     }
 
     @PostMapping("/execution/{executionId}/restart")
-    public void startExecution(@PathVariable Long executionId) throws JobParametersInvalidException, JobRestartException, JobInstanceAlreadyCompleteException, NoSuchJobExecutionException, NoSuchJobException {
-
+    public void restartExecution(@PathVariable Long executionId) throws JobParametersInvalidException, JobRestartException, JobInstanceAlreadyCompleteException, NoSuchJobExecutionException, NoSuchJobException {
+        jobOperator.restart(executionId);
     }
 
     @PostMapping("/simple-job/start/{parameter}")
     public void startSimpleJobWithParameter(@PathVariable String parameter) {
-
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addString("parameter", parameter)
+                .toJobParameters();
+        triggerJobService.triggerJob(simpleJob, jobParameters);
     }
 }

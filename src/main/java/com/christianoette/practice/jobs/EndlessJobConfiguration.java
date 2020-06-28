@@ -40,7 +40,7 @@ public class EndlessJobConfiguration {
                             .getJobExecution()
                             .getExecutionContext();
                     int count = executionContext.getInt("contextInfo", 0);
-                    executionContext.putInt("contextInfo", count);
+                    executionContext.putInt("contextInfo", count + 1);
 
                     try {
                         Thread.sleep(2000);
